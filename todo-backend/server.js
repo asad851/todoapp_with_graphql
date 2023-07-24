@@ -12,11 +12,13 @@ const schema = buildSchema(`
     id: ID!
     title: String!
     description: String!
+    completed:Boolean!
   }
 
   input TodoInput {
     title: String!
     description: String!
+   
   }
 
   type Query {
@@ -29,6 +31,7 @@ const schema = buildSchema(`
     createTodo(input: TodoInput!): Todo
     updateTodo(id: ID!, input: TodoInput!): Todo
     deleteTodo(id: ID!): String
+    updateCompletion(id:ID!,completed:Boolean!):Todo
   }
 `);
 
@@ -40,6 +43,7 @@ const root = {
   createTodo: ({ input }) => {
     const todo = {
       id: String(todos.length + 1),
+      completed:false,
       title: input.title,
       description: input.description,
     };
@@ -53,6 +57,20 @@ const root = {
         id,
         title: input.title,
         description: input.description,
+      };
+      todos[todoIndex] = todo;
+      return todo;
+    }
+    return null;
+  },
+  updateCompletion:({id,input})=>{
+    const todoIndex = todos.findIndex(todo => todo.id === id);
+    if (todoIndex !== -1) {
+      const todo = {
+        id,
+        title: title,
+        description: description,
+        completed:input.completed,
       };
       todos[todoIndex] = todo;
       return todo;

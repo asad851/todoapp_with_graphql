@@ -18,6 +18,7 @@ export const CREATE_TODO = gql`
       id
       title
       description
+      completed
     }
   }
 `;
@@ -30,6 +31,17 @@ export const UPDATE_TODO = gql`
     }
   }
 `
+// export const UPDATE_COMPLETION=gql`
+//    mutation UpdateCompletion($id:ID!,$input:TodoInput!){
+//     updateCompletion(id: $id, input: $input){
+//       id
+//       title
+//       description
+//       completed
+//     }
+//    }
+// `
+
 
 
 export const DELETE_TODO = gql`
